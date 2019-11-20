@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}
+
+.card-wrapper {
+  display: flex;
+  width: 680px;
+}
+
+.home-container {
+  margin-top: 20px;
+}
+
+.project-card {
+  margin-right: 10px;
+}
+
+.task-list {
+   width: 800px;
+   background: #fff;
+}
+
+.tasks-container span {
+  margin-left: 10px !important;
+}
