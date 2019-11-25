@@ -1,3 +1,61 @@
+### Resumo do projeto
+
+src/contém nossa aplicação react
+
+components/ : tem components burros que apenas recebe valores exibem
+
+containers/ : possui component que tem lógica e gerenciam outros components burros
+
+App/ : contém a configuração das rotas associa a cada url um container
+
+lib/: possui uma classe que grava tasks e projects no local storage para simular backend 
+
+public/ : tem todo o index.html, imagens, logos
+
+* Dica: não precisa compilar o node. use nvm com ele você pode usar vãrias versoes do node
+na sua máquina de forma simples:
+
+1.
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+
+ou
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+
+abra com o nano ou o vim o ~/.bashrc
+veja se tem isso aqui
+
+```
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+```
+
+* feche o terminal abra novamente
+
+* entre no projeto cd gilvandro-project
+
+* nvm install 10.13
+
+* npm install 
+
+* npm start 
+
+OBS: os outro arquivos são gerados pelo boilerplate do react-create-app
+depois podemos remover 
+
+o NPM é um gerenciados de pacotes que podemos isntalar pacotes de forma fácil
+usando npm -i nome-do-pacote --save
+instalamos um package isso é salvo no package.json
+
+que gera um packa-lock para travar e consertar compatibilidade entre os packages internamente
+
+no package.json temos um tag scripts que podemos executar para startar o projeto
+rodar testes, e fazer N coisas.
+
+Tudo que está em component pegamos da documentação do material-ui components
+como são componenentes prontos só fizemos usá-los
+
+----------------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
