@@ -17,9 +17,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import db from '../lib/db';
 
-/* 
-configurações de estilos do material ui
-*/
 const useStyles = makeStyles(theme => ({
   fab: {
     margin: theme.spacing(1),
@@ -63,11 +60,6 @@ function getModalStyle() {
   };
 }
 
-/**
- Esse são objetos fake simulando um dado que vem direto do banco
- Quando fizermos a request para listar os tasks do porjeto iremos 
- receber um json vindo da API com um formato similar
-*/
 const projectsFake = {
   1: {
     tasks: [
@@ -131,62 +123,31 @@ const projectsFake = {
   }
 };
 
-/*
-  componente que representa toda pagina de login
-*/
 function Project(props) {
-  /* 
-   project é o projeto atual tasks é o array de tasks que preciso listar no render abaixo
-   setProject método seter para taulizar as tasks
-  */
   const [project, setProject] = useState({ tasks: [] });
   const [projectOld, setOldProject] = useState({ tasks: [] });
-  // id via url do projeto
   const { id }  = useParams();
   const classes = useStyles();
 
-  // Modal
-  /* gerencia quando abre e fecha o modal */ 
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
 
-  // abre modal
   const handleOpen = () => {
     setOpen(true);
   };
 
-  // fecha modal
   const handleClose = () => {
     setOpen(false);
   };
   
-  /*
-    uma função de react-hooks
-    que vai executar no final que a pãgina é carregada
-    aqui devemos usar axios para fazer request
-    no momemento estamos  usando dados fake estaticos
-  */
   useEffect(() => {
-    // Check if the user logged is manager to show all tasks
     const me = store.get('logged-user');
 
-    // acessa as tasks do projeto que etamos abrindo
-    // storage a lib qeu acessa localStorage
-    // id vem da url da task atual
     const currentTasks = store.get('tasks') && store.get('tasks')[id]
       ? store.get('tasks')[id]
       : projectsFake[id];
 
-    /* 
-      como não temos API estamos fazendo no frontend uma filtragem caso o user seja admin ele
-      pode ver todos
-      caso não seja admi ele pode ver apenas o projeto onde ele é contribuidor
-
-      essa lógica pode ser feita no backend o cara poe fazer um query,
-      podemos passar o username do user logado e no backend fica essa lógica
-     mas para facilitar no frontend podemos fazer já que é um protótipo
-    */
     if (me !== 'admin') {
       const filteredData = currentTasks.tasks.filter(p => {
         return p.assigned.includes(me);
@@ -199,23 +160,17 @@ function Project(props) {
     }
   }, []);
 
-  /* 
-    redirect para login e apaga credenciais
-  */ 
   const logout = () => {
     store.set('logged-token', '');
     store.get('logged-user', '');
     props.history.push('/');
   };
 
-  /* reseta a filtragem */
   const filterByAll = () => {
     setProject(projectOld);
   };
 
-  /* fitlra e atualiza o estado para listar apenas minhas tasks */
   const filterByMe = () => {
-    // NOTE: Admin filtering data
     const me = store.get('logged-user');
     const filteredData = project.tasks.filter(p => {
       return p.assigned.includes(me)
@@ -223,9 +178,6 @@ function Project(props) {
     setProject({ tasks: filteredData });
   };
 
-  /* 
-    gerencia o estado do fomrulário que adiciona task
-  */
   const [fields, setField] = useState({
     id: Math.floor(Math.random() * 10000),
     title: '',
@@ -240,33 +192,22 @@ function Project(props) {
     });
   };
 
-  /* 
-    adciona e salva nova task
-  */
   const addNewTask = (event) => {
     event.preventDefault();
-    // Store it in localStorage
     const currentProject = project;
     const tasks = [...currentProject.tasks, fields];
     db.newTaks(id, tasks);
 
-    // Update the component state and list it
     setProject({
       tasks,
     });
 
-    // reset
     setField({ title: '', description: '', dueDate: '2019-12-24T10:30' });
     handleClose();
   };
 
   const me = store.get('logged-user');
 
-  /* 
-    lista as tasks
-    cada botão tem um evento associal de onLick
-    que filtra por todos, filtra por apenas minhas tasks, reset filtragem
-  */
   return (
     <div>
       <Header logout={logout} />
